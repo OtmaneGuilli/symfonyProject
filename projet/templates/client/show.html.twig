@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail du client{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <h1 class="h4 mb-4 text-center text-primary">Détail du client</h1>
+
+                    <ul class="list-group mb-4">
+                        <li class="list-group-item"><strong>Gérant :</strong> {{ client.nomGerant }}</li>
+                        <li class="list-group-item"><strong>Raison sociale :</strong> {{ client.raisonSociale }}</li>
+                        <li class="list-group-item"><strong>Téléphone :</strong> {{ client.telephone }}</li>
+                        <li class="list-group-item"><strong>Adresse :</strong> {{ client.adresse }}</li>
+                        <li class="list-group-item"><strong>Ville :</strong> {{ client.ville }}</li>
+                        <li class="list-group-item"><strong>Pays :</strong> {{ client.pays }}</li>
+                    </ul>
+
+                    <div class="d-flex flex-wrap justify-content-between gap-2">
+                        <a href="{{ path('app_client_index') }}" class="btn btn-outline-secondary w-100">← Retour</a>
+                        <a href="{{ path('app_client_edit', {'id': client.id}) }}" class="btn btn-outline-warning w-100">Modifier</a>
+                        <form method="post" action="{{ path('app_client_delete', {'id': client.id}) }}"
+                              onsubmit="return confirm('Supprimer ce client ?');" class="w-100">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ client.id) }}">
+                            <button class="btn btn-outline-danger w-100">Supprimer</button>
+                        </form>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="text-center">
+                        <a href="{{ path('app_facture_by_client', {'id': client.id}) }}" class="btn btn-sm btn-info">
+                            Voir ses factures
+                        </a>
+                        <a href="{{ path('app_facture_new', {'client': client.id}) }}" class="btn btn-sm btn-success">
+                            Créer une facture
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

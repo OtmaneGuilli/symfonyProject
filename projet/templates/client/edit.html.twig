@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le client{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <h1 class="h4 mb-4 text-center text-primary">Modifier le client</h1>
+
+                    {{ form_start(form) }}
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form.nomGerant, {'attr': {'placeholder': 'Nom du gérant', 'class': 'form-control'}}) }}
+                        <label for="{{ form.nomGerant.vars.id }}">Nom du gérant</label>
+                        {{ form_errors(form.nomGerant) }}
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form.raisonSociale, {'attr': {'placeholder': 'Raison sociale', 'class': 'form-control'}}) }}
+                        <label for="{{ form.raisonSociale.vars.id }}">Raison sociale</label>
+                        {{ form_errors(form.raisonSociale) }}
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form.telephone, {'attr': {'placeholder': 'Téléphone', 'class': 'form-control'}}) }}
+                        <label for="{{ form.telephone.vars.id }}">Téléphone</label>
+                        {{ form_errors(form.telephone) }}
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form.adresse, {'attr': {'placeholder': 'Adresse', 'class': 'form-control'}}) }}
+                        <label for="{{ form.adresse.vars.id }}">Adresse</label>
+                        {{ form_errors(form.adresse) }}
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form.ville, {'attr': {'placeholder': 'Ville', 'class': 'form-control'}}) }}
+                        <label for="{{ form.ville.vars.id }}">Ville</label>
+                        {{ form_errors(form.ville) }}
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        {{ form_widget(form.pays, {'attr': {'placeholder': 'Pays', 'class': 'form-control'}}) }}
+                        <label for="{{ form.pays.vars.id }}">Pays</label>
+                        {{ form_errors(form.pays) }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Mettre à jour</button>
+
+                    {{ form_end(form) }}
+
+                    <div class="text-center mt-3">
+                        <a href="{{ path('app_client_index') }}" class="btn btn-link">← Retour à la liste</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

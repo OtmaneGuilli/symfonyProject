@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail de la facture{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow border-0">
+                <div class="card-body p-4">
+                    <h1 class="h4 mb-4 text-center text-primary">
+                        Facture n°{{ facture.numeroFacture }}
+                    </h1>
+
+                    <ul class="list-group mb-4">
+                        <li class="list-group-item">
+                            <strong>Date :</strong> {{ facture.dateFacturation|date('d/m/Y') }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Montant :</strong> {{ facture.montant }} €
+                        </li>
+                        <li class="list-group-item">
+                            <strong>État :</strong> {{ facture.etat }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Client :</strong> {{ facture.client.raisonSociale }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Note :</strong><br>
+                            <div class="text-muted mt-1">{{ facture.note|nl2br }}</div>
+                        </li>
+                    </ul>
+
+                    <div class="d-flex flex-wrap gap-2 justify-content-between">
+                        <a href="{{ path('app_facture_index') }}" class="btn btn-outline-secondary w-100">
+                            ← Retour à la liste
+                        </a>
+                        <a href="{{ path('app_facture_edit', {'id': facture.id}) }}" class="btn btn-outline-warning w-100">
+                            Modifier
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

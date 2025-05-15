@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes clients{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Mes clients</h1>
+
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="{{ path('app_client_new') }}" class="btn btn-success">Ajouter un client</a>
+        <a href="{{ path('app_facture_index') }}" class="btn btn-outline-secondary">Voir toutes les factures</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Gérant</th>
+                    <th>Raison sociale</th>
+                    <th>Ville</th>
+                    <th>Pays</th>
+                    <th>Téléphone</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                    <tr>
+                        <td>{{ client.nomGerant }}</td>
+                        <td>{{ client.raisonSociale }}</td>
+                        <td>{{ client.ville }}</td>
+                        <td>{{ client.pays }}</td>
+                        <td>{{ client.telephone }}</td>
+                        <td class="text-center">
+                            <div class="d-flex flex-wrap gap-1 justify-content-center">
+                                <a href="{{ path('app_client_show', {'id': client.id}) }}" class="btn btn-sm btn-outline-primary">Voir</a>
+                                <a href="{{ path('app_client_edit', {'id': client.id}) }}" class="btn btn-sm btn-outline-warning">Modifier</a>
+                                <form method="post" action="{{ path('app_client_delete', {'id': client.id}) }}"
+                                      onsubmit="return confirm('Confirmer la suppression ?');" class="d-inline">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ client.id) }}">
+                                    <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+                                </form>
+                                <a href="{{ path('app_facture_new', {'client': client.id}) }}" class="btn btn-sm btn-outline-success">Créer facture</a>
+                                <a href="{{ path('app_facture_by_client', {'id': client.id}) }}" class="btn btn-sm btn-outline-info">Voir factures</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">Aucun client trouvé</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

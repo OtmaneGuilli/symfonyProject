@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une facture{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow border-0">
+                <div class="card-body p-4">
+                    <h1 class="h4 mb-4 text-center text-success">Créer une nouvelle facture</h1>
+
+                    {{ form_start(form) }}
+
+                   {#  <div class="form-floating mb-3">
+                        //{{ form_widget(form.numeroFacture, {'attr': {'placeholder': 'Numéro de facture', 'class': 'form-control'}}) }}
+                        <label for="{{ form.numeroFacture.vars.id }}">Numéro</label>
+                        {{ form_errors(form.numeroFacture) }}
+                    </div>#}
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form.dateFacturation, {'attr': {'class': 'form-control'}}) }}
+                        <label for="{{ form.dateFacturation.vars.id }}">Date de facturation</label>
+                        {{ form_errors(form.dateFacturation) }}
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form.montant, {'attr': {'placeholder': 'Montant', 'class': 'form-control'}}) }}
+                        <label for="{{ form.montant.vars.id }}">Montant (€)</label>
+                        {{ form_errors(form.montant) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.etat) }}
+                        {{ form_widget(form.etat, {'attr': {'class': 'form-select'}}) }}
+                        {{ form_errors(form.etat) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.note) }}
+                        {{ form_widget(form.note, {'attr': {'class': 'form-control', 'rows': 3}}) }}
+                        {{ form_errors(form.note) }}
+                    </div>
+
+                    <div class="mb-4">
+                        {{ form_label(form.client) }}
+                        {{ form_widget(form.client, {'attr': {'class': 'form-select'}}) }}
+                        {{ form_errors(form.client) }}
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">Enregistrer la facture</button>
+
+                    {{ form_end(form) }}
+
+                    <div class="text-center mt-3">
+                        <a href="{{ path('app_facture_index') }}" class="btn btn-link">← Retour à la liste des factures</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

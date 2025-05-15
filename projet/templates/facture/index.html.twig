@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes factures{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Mes factures</h1>
+
+    <div class="d-flex justify-content-between mb-3">
+        <a href="{{ path('app_facture_new') }}" class="btn btn-success">Ajouter une facture</a>
+        <a href="{{ path('app_client_index') }}" class="btn btn-secondary">← Retour aux clients</a>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Numéro</th>
+                <th>Date</th>
+                <th>Montant</th>
+                <th>État</th>
+                <th>Client</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for facture in factures %}
+            <tr>
+                <td>{{ facture.numeroFacture }}</td>
+                <td>{{ facture.dateFacturation ? facture.dateFacturation|date('d/m/Y') : '' }}</td>
+                <td>{{ facture.montant }} €</td>
+                <td>{{ facture.etat }}</td>
+                <td>{{ facture.client.raisonSociale }}</td>
+                <td class="d-flex flex-wrap gap-1">
+                    <a href="{{ path('app_facture_show', {'id': facture.id}) }}" class="btn btn-sm btn-primary">Voir</a>
+                    <a href="{{ path('app_facture_edit', {'id': facture.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                    <form method="post" action="{{ path('app_facture_delete', {'id': facture.id}) }}" onsubmit="return confirm('Supprimer cette facture ?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ facture.id) }}">
+                        <button class="btn btn-sm btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6" class="text-center">Aucune facture trouvée.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
