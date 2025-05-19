@@ -7,12 +7,10 @@ pipeline {
 
     stages {
         stage('Cloner le repo') {
-    steps {
-        git branch: 'main', url: 'https://github.com/OtmaneGuilli/symfonyProject.git'
-    }
-}
-}
-
+            steps {
+                git branch: 'main', url: 'https://github.com/OtmaneGuilli/symfonyProject.git'
+            }
+        }
 
         stage('Analyse SonarQube') {
             steps {
@@ -23,13 +21,12 @@ pipeline {
         }
 
         stage('Docker Build') {
-    steps {
-        dir('projet') {
-            sh 'docker build -t otmane49/symfony-app .'
+            steps {
+                dir('projet') {
+                    sh 'docker build -t otmane49/symfony-app .'
+                }
+            }
         }
-    }
-}
-
 
         stage('Push DockerHub') {
             steps {
