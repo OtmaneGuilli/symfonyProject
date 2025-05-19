@@ -11,10 +11,10 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Set working directory
-WORKDIR /var/www/html/projet
+WORKDIR /var/www/html/
 
 # Copy project files
-COPY projet/ ./
+COPY . .
 
 # Install PHP dependencies
 RUN composer install --no-interaction --no-progress --optimize-autoloader
