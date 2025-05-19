@@ -13,11 +13,14 @@ pipeline {
         }
 
         stage('Composer install') {
-            steps {
-                sh 'composer install'
-                sh 'php bin/console cache:clear'
-            }
+    steps {
+        dir('projet') {
+            sh 'composer install'
+            sh 'php bin/console cache:clear'
         }
+    }
+}
+
 
         stage('Analyse SonarQube') {
             steps {
@@ -28,10 +31,13 @@ pipeline {
         }
 
         stage('Docker Build') {
-            steps {
-                sh 'docker build -t otmane49/symfony-app .'
-            }
+    steps {
+        dir('projet') {
+            sh 'docker build -t otmane49/symfony-app .'
         }
+    }
+}
+
 
         stage('Push DockerHub') {
             steps {
