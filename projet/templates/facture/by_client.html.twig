@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Factures de {{ client.raisonSociale }}{% endblock %}
+{% block title %}Factures de {{ client.nomGerant }}{% endblock %}
 
 {% block body %}
 <div class="container mt-5">
-    <h1 class="mb-4">Factures de <span class="text-primary">{{ client.raisonSociale }}</span></h1>
+    <h1 class="mb-4">Factures de <span class="text-primary">{{ client.nomGerant }}</span></h1>
 
     {% if factures is empty %}
         <div class="alert alert-info">Ce client n’a aucune facture enregistrée.</div>

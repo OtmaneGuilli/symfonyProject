@@ -44,7 +44,7 @@ class Client
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Facture::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Facture::class,cascade:['remove'], orphanRemoval: true)]
     private Collection $factures;
 
     public function __construct()

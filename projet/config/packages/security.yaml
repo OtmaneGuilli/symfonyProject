@@ -10,6 +10,7 @@ security:
                 property: identifiant
 
     firewalls:
+        
         main:
             lazy: true
             provider: app_user_provider
@@ -30,4 +31,5 @@ security:
     access_control:
         - { path: ^/register, roles: PUBLIC_ACCESS }
         - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/home, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: ROLE_USER }
