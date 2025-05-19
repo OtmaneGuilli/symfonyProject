@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Cloner le repo') {
             steps {
-                git 'https://gitlab.com/votre-repo.git'
+                git 'https://github.com/OtmaneGuilli/symfonyProject.git'
             }
         }
 
