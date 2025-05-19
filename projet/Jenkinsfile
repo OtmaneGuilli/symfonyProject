@@ -7,10 +7,10 @@ pipeline {
 
     stages {
         stage('Cloner le repo') {
-            steps {
-                git 'https://github.com/OtmaneGuilli/symfonyProject.git'
-            }
-        }
+    steps {
+        git branch: 'main', url: 'https://github.com/OtmaneGuilli/symfonyProject.git'
+    }
+}
 
         stage('Composer install') {
     steps {
