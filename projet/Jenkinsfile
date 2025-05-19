@@ -11,14 +11,6 @@ pipeline {
         git branch: 'main', url: 'https://github.com/OtmaneGuilli/symfonyProject.git'
     }
 }
-
-        stage('Composer install') {
-    steps {
-        dir('projet') {
-            sh 'composer install'
-            sh 'php bin/console cache:clear'
-        }
-    }
 }
 
 
