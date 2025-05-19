@@ -29,7 +29,7 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t votre_dockerhub/symfony-app .'
+                sh 'docker build -t otmane49/symfony-app .'
             }
         }
 
@@ -37,7 +37,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
                     sh 'docker login -u $DOCKER_USER -p $DOCKER_PASS'
-                    sh 'docker push votre_dockerhub/symfony-app'
+                    sh 'docker push otmane49/symfony-app'
                 }
             }
         }
