@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+
+    environment {
+        SONARQUBE = credentials('sonarqube-token') // ID from Jenkins credentials
+    }
+
+    stages {
+        stage('Cloner le repo') {
+            steps {
+                git 'https://gitlab.com/votre-repo.git'
+            }
+        }
+
+        stage('Composer install') {
+            steps {
+                sh 'composer install'
+                sh 'php bin/console cache:clear'
+            }
+        }
+
+        stage('Analyse SonarQube') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh 'sonar-scanner'
+                }
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t votre_dockerhub/symfony-app .'
+            }
+        }
+
+        stage('Push DockerHub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+                    sh 'docker login -u $DOCKER_USER -p $DOCKER_PASS'
+                    sh 'docker push votre_dockerhub/symfony-app'
+                }
+            }
+        }
+
+        stage('Déploiement Ansible') {
+            steps {
+                sh 'ansible-playbook -i ansible/inventory.ini ansible/deploy.yml'
+            }
+        }
+    }
+}

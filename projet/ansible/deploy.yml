@@ -1,0 +1,11 @@
+- hosts: localhost
+  tasks:
+    - name: Stop existing containers
+      command: docker-compose down
+      args:
+        chdir: /chemin/vers/projet
+
+    - name: Start containers
+      command: docker-compose up -d --build
+      args:
+        chdir: /chemin/vers/projet

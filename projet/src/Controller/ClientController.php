@@ -84,24 +84,20 @@ class ClientController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_client_delete', methods: ['POST'])]
-    public function delete(Request $request, Client $client, EntityManagerInterface $entityManager): Response
-    {
-        if ($client->getUser() !== $this->getUser()) {
-            throw $this->createAccessDeniedException();
-        }
-
-        if (count($client->getFactures()) > 0) {
-            $this->addFlash('error', 'Impossible de supprimer un client ayant des factures.');
-            return $this->redirectToRoute('app_client_index');
-        }
-
-        if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($client);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Client supprimé.');
-        }
-
-        return $this->redirectToRoute('app_client_index');
+public function delete(Request $request, Client $client, EntityManagerInterface $entityManager): Response
+{
+    if ($client->getUser() !== $this->getUser()) {
+        throw $this->createAccessDeniedException();
     }
+
+    if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->request->get('_token'))) {
+        $entityManager->remove($client);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Client et ses factures supprimés.');
+    }
+
+    return $this->redirectToRoute('app_client_index');
+}
+
 }
