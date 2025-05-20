@@ -16,15 +16,15 @@ pipeline {
         }
 
         stage('Analyse SonarQube') {
-            steps {
-                dir('projet') {
-                    withSonarQubeEnv('SonarQube') {
-                        // Lance l'analyse statique via le fichier sonar-project.properties
-                        sh 'sonar-scanner'
-                    }
-                }
+    steps {
+        dir('projet') {
+            withSonarQubeEnv('SonarQube') {
+                def scannerHome = tool 'SonarScanner' // Le nom que tu as donné dans Jenkins
+                sh "${scannerHome}/bin/sonar-scanner"
             }
         }
+    }
+}
 
         stage('Docker Build') {
             steps {
