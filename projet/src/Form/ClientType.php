@@ -18,7 +18,7 @@ class ClientType extends AbstractType
             ->add('adresse')
             ->add('ville')
             ->add('pays');
-        // PAS de champ 'user' ici
+        // pas de champ user ici
     }
 
     public function configureOptions(OptionsResolver $resolver): void

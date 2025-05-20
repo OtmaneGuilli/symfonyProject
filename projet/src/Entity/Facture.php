@@ -37,7 +37,7 @@ class Facture
 
     #[ORM\ManyToOne(inversedBy: 'factures')]
     #[ORM\JoinColumn(nullable: false)]
-    // 🔥 SUPPRIMÉ : #[Assert\NotNull(message: 'Le client est obligatoire.')]
+    //#[Assert\NotNull(message: 'Le client est obligatoire.')]
     private ?Client $client = null;
 
     public function getId(): ?int { return $this->id; }
