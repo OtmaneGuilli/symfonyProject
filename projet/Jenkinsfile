@@ -2,34 +2,32 @@ pipeline {
     agent any
 
     environment {
-        // Utilise le token enregistré dans Jenkins pour SonarQube
-        SONARQUBE = credentials('sonarqube-token')
+        SONARQUBE = credentials('sonarqube-token') // ID from Jenkins credentials
     }
 
     stages {
-
         stage('Cloner le repo') {
             steps {
-                // Clone la branche main depuis ton dépôt GitHub
                 git branch: 'main', url: 'https://github.com/OtmaneGuilli/symfonyProject.git'
             }
         }
 
         stage('Analyse SonarQube') {
-    steps {
-        dir('projet') {
-            withSonarQubeEnv('SonarQube') {
-                def scannerHome = tool 'SonarScanner' // Le nom que tu as donné dans Jenkins
-                sh "${scannerHome}/bin/sonar-scanner"
+            steps {
+                dir('projet') {
+                    withSonarQubeEnv('SonarQube') {
+                        script {
+                            def scannerHome = tool 'SonarScanner' // Le nom donné dans Jenkins > Global Tool Configuration
+                            sh "${scannerHome}/bin/sonar-scanner"
+                        }
+                    }
+                }
             }
         }
-    }
-}
 
         stage('Docker Build') {
             steps {
                 dir('projet') {
-                    // Construit l’image Docker à partir du Dockerfile
                     sh 'docker build -t otmane49/symfony-app .'
                 }
             }
@@ -37,10 +35,8 @@ pipeline {
 
         stage('Push DockerHub') {
             steps {
-                // Authentification avec DockerHub
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
                     sh 'docker login -u $DOCKER_USER -p $DOCKER_PASS'
-                    // Pousse l’image Docker sur DockerHub
                     sh 'docker push otmane49/symfony-app'
                 }
             }
@@ -48,7 +44,6 @@ pipeline {
 
         stage('Déploiement Ansible') {
             steps {
-                // Lance le playbook ansible de déploiement
                 sh 'ansible-playbook -i ansible/inventory.ini ansible/deploy.yml'
             }
         }
