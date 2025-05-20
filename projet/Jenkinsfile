@@ -13,12 +13,16 @@ pipeline {
         }
 
         stage('Analyse SonarQube') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh 'sonar-scanner'
-                }
+    steps {
+        dir('projet') {
+            withSonarQubeEnv('SonarQube') {
+                sh 'sonar-scanner'
             }
         }
+    }
+}
+
+
 
         stage('Docker Build') {
             steps {
