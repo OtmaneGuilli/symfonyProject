@@ -19,7 +19,7 @@ class RegistrationController extends AbstractController
         UserPasswordHasherInterface $passwordHasher,
         EntityManagerInterface $entityManager
     ): Response {
-        // Si l'utilisateur est déjà connecté, rediriger vers /client
+        
         if ($this->getUser()) {
             return $this->redirectToRoute('app_client_index');
         }
@@ -29,21 +29,21 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Hash du mot de passe
+            
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,
                 $form->get('plainPassword')->getData()
             );
             $user->setPassword($hashedPassword);
 
-            // Enregistrement en base
+            
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // Message de confirmation
+            
             $this->addFlash('success', 'Inscription réussie ! Vous pouvez maintenant vous connecter.');
 
-            // Redirection vers la page de connexion
+            
             return $this->redirectToRoute('app_login');
         }
 

@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         SONARQUBE = credentials('sonarqube-token') // ID from Jenkins credentials
+        DOCKERHUB = credentials('dockerhub') // ID from Jenkins credentials
     }
 
     stages {
